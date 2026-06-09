@@ -1,0 +1,48 @@
+@page "/event/{Id:int}"
+
+@using EventEase.Models
+
+@if(Event == null)
+{
+    <p>
+        Event not found.
+    </p>
+
+    <NavLink href="/events">
+        Back to Events
+    </NavLink>
+}
+else
+{
+    <h2>@Event.Name</h2>
+
+    <p>Date: @Event.Date.ToShortDateString()</p>
+
+    <p>Location: @Event.Location</p>
+
+    <p>Attendees: @Event.AttendeeCount</p>
+
+    <NavLink href="/registration">
+        Register
+    </NavLink>
+}
+
+@code{
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private EventModel Event;
+
+    protected override void OnInitialized()
+    {
+        Event = new EventModel
+        {
+            Id = Id,
+            Name = "AI Summit",
+            Date = DateTime.Now.AddDays(30),
+            Location = "Delhi",
+            AttendeeCount = 100
+        };
+    }
+}
