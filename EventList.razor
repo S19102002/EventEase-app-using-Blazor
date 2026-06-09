@@ -1,0 +1,43 @@
+@page "/events"
+
+@using EventEase.Models
+
+<h2>Upcoming Events</h2>
+
+<Virtualize Items="events" Context="ev">
+    <EventCard
+        EventName="@ev.Name"
+        EventDate="@ev.Date"
+        EventLocation="@ev.Location"
+        AttendeeCount="@ev.AttendeeCount" />
+
+    <NavLink href="@($"/event/{ev.Id}")">
+        View Details
+    </NavLink>
+
+    <hr />
+</Virtualize>
+
+@code{
+
+    private List<EventModel> events = new()
+    {
+        new()
+        {
+            Id = 1,
+            Name = "AI Summit",
+            Date = new DateTime(2026,7,20),
+            Location = "Delhi",
+            AttendeeCount = 100
+        },
+
+        new()
+        {
+            Id = 2,
+            Name = "Tech Conference",
+            Date = new DateTime(2026,8,12),
+            Location = "Kolkata",
+            AttendeeCount = 75
+        }
+    };
+}
