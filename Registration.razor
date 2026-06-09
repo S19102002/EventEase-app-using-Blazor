@@ -1,0 +1,69 @@
+@page "/registration"
+
+@using EventEase.Models
+@using EventEase.Services
+
+@inject UserSessionService Session
+
+<h2>Register for Event</h2>
+
+@if(Session.IsRegistered)
+{
+    <div>
+        Welcome Back @Session.UserName
+    </div>
+}
+
+<EditForm Model="@registration"
+          OnValidSubmit="RegisterUser">
+
+    <DataAnnotationsValidator />
+
+    <ValidationSummary />
+
+    <div>
+        <label>Name</label>
+
+        <InputText
+            @bind-Value="registration.Name" />
+    </div>
+
+    <div>
+        <label>Email</label>
+
+        <InputText
+            @bind-Value="registration.Email" />
+    </div>
+
+    <button type="submit">
+        Register
+    </button>
+
+</EditForm>
+
+@if(showSuccess)
+{
+    <h4>
+        Registration Successful
+    </h4>
+}
+
+@code{
+
+    private RegistrationModel registration = new();
+
+    private bool showSuccess;
+
+    private int attendeeCount = 100;
+
+    private void RegisterUser()
+    {
+        Session.UserName = registration.Name;
+
+        Session.IsRegistered = true;
+
+        attendeeCount++;
+
+        showSuccess = true;
+    }
+}
